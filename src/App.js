@@ -1,9 +1,11 @@
 import './App.scss';
 
 import Message from "./Message";
-import {Counter, CounterClass} from "./Counter";
+import {Counter, CounterClass, Example} from "./Counter";
 
 function App(props) {
+
+
     const name = 'Natalya';
     return (
         <header className={`App-header ${props.showRed ? 'header-red' : 'header-blue'}`}
@@ -19,8 +21,7 @@ function App(props) {
                 <Counter />
             </div>
             <div>
-                <CounterClass/>
-
+                <Example name = {name}/>
             </div>
         </header>
   );

@@ -6,9 +6,11 @@ import reportWebVitals from './reportWebVitals';
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const myName = 'Natalya';
+let isRed = false;
+let top = '15px';
 root.render(
   <React.StrictMode>
-    <App name={myName}/>
+    <App name={myName} showRed = {isRed} topPosition = {top}/>
   </React.StrictMode>
 );
 
