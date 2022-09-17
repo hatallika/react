@@ -1,14 +1,13 @@
 import React, {useState} from "react";
 export function Counter(){
-        const [count, setCount] = useState(0);
-    const updateCount = ()=>{
-        // setCount(count + 1);
-        setCount((prevCount) => prevCount + 1);
-    }
+        const [value, setValue] = useState('');
+        const handleChange = (event)=> {
+            setValue(event.target.value);
+        }
     return(
         <div>
-            <span className="counter">{count}</span>
-            <button className="counter-button" onClick={updateCount}>+1</button>
+            <input type="text" value={value} onChange={handleChange}/>
+
         </div>
     )
 }
@@ -16,28 +15,36 @@ export function Counter(){
 export class CounterClass extends React.Component {
     constructor(props) {
         super(props);
-
-        this.state = {
-            count: 0,
-            name: "Alexander"
-        };
+        console.log('constructor');
     }
 
-    updateCount = () => {
-        this.setState({count: 2, name: 'noname' },
-        ()=>{console.log(this.state);
-        });
+    componentDidMount() {
+        console.log('ComponentDidMount');
     }
 
     render() {
+        console.log('render')
         return(
             <div>
-                <span className="name">{this.state.name}</span><br/>
-                <span className="counter">{this.state.count}</span>
-                <button className="counter-button" onClick={this.updateCount}>
-                    Click!
-                </button>
+                rendered!
+                <Child/>
             </div>
         )
+    }
+}
+class Child extends React.Component {
+    constructor(props) {
+        super(props);
+
+        console.log("child constructor");
+    }
+
+    componentDidMount() {
+        console.log("child componentDidMount");
+    }
+
+    render() {
+        console.log("child render")
+        return <div>child rendered!</div>
     }
 }

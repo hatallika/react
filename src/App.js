@@ -20,6 +20,7 @@ function App(props) {
             </div>
             <div>
                 <CounterClass/>
+
             </div>
         </header>
   );
