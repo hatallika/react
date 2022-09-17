@@ -1,10 +1,13 @@
-import './App.css';
-import Message from "./Message";
+import './App.scss';
 
-function App() {
+import Message from "./Message";
+import {Counter, CounterClass} from "./Counter";
+
+function App(props) {
     const name = 'Natalya';
     return (
-        <header className="App-header">
+        <header className={`App-header ${props.showRed ? 'header-red' : 'header-blue'}`}
+                style={{top: props.topPosition || `15px`}}>
             <h1>Добро пожаловать!</h1>
             <div>
                 <Message name={name}/>
@@ -12,8 +15,13 @@ function App() {
             <div className="screen">
                 <a href="./img/react_dev_tools.png"  target="_blank">Screen React dev tools</a>
             </div>
+            <div>
+                <Counter />
+            </div>
+            <div>
+                <CounterClass/>
+            </div>
         </header>
-
   );
 }
 
