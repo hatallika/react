@@ -1,10 +1,9 @@
 import './App.scss';
 
 import Message from "./Message";
-import {Counter, CounterClass, Example} from "./Counter";
+import {Counter, Example} from "./Counter";
 
 function App(props) {
-
 
     const name = 'Natalya';
     return (
@@ -18,7 +17,7 @@ function App(props) {
                 <a href="./img/react_dev_tools.png"  target="_blank">Screen React dev tools</a>
             </div>
             <div>
-                <Counter />
+                <Counter hugeArray ={[1, 2]}/>
             </div>
             <div>
                 <Example name = {name}/>
