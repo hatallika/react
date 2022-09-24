@@ -1,12 +1,26 @@
-import './App.scss';
-import React, {useEffect, useState} from "react";
+import './App.css';
+import React, {useEffect, useRef, useState} from "react";
 import Form from "./Form";
+import ChatList from "./ChatList";
+import {Box, Container, createTheme, Grid, Paper, ThemeProvider, Typography} from "@mui/material";
+import {blue} from "@mui/material/colors";
+import MessageItem from "./MessageItem";
+
+
+const theme = createTheme({
+    palette: {
+        primary: {
+            main: blue[500],
+        }
+    }
+})
 
 function App() {
     let [messageList, setMessageList] = useState([]);
     let [robot, setRobot] = useState("");
+    const inputRef = useRef(null);
 
-    //Вне ДЗ попробовала использовать useEffect для единоразового рендера списка из хранилища данных.
+    // Ранее сохраненные сообщения.
     const bdMessage = [
         {id: 1, author:"author1",message: "Hello!"},
         {id: 2, author:"author2",message: "Hello! My friends!"},
@@ -19,17 +33,23 @@ function App() {
     // eslint-disable-next-line react-hooks/exhaustive-deps
     }, [] );
 
-    //Задача 3 и 4. Робот отвечает на новое полученное сообщение автора.
+    //Робот отвечает на новое полученное сообщение автора.
     useEffect(()=>{
        setTimeout(()=>{
            botAnswer();
-       }, 3000)
-
+       }, 3000);
+       //Автофокус
+       focusTextField(inputRef.current);
         // eslint-disable-next-line react-hooks/exhaustive-deps
     },[messageList])
 
+    function focusTextField(input){
+        if(input){
+            input.focus();
+        }
+    }
 
-    //Задача 2: получим данные списка из формы
+    //Получим данные списка из формы
     const getInputMessage = (author, message) => {
 
         setMessageList(prevState => [...prevState, {
@@ -53,23 +73,39 @@ function App() {
     }
 
     return (
-        <div>
-            <div className="App-header"><h1>Lesson 2</h1></div>
-            <div className="main">
-                <Form updateCurrentPage = {getInputMessage} />
-                {
-                    messageList.map((message) => (
-                            <div key ={message.id} className="messageItem">
-                                <span className="span_message">{message.author}: </span>
-                                <span className="message">{message.message}</span>
-                            </div>
-                        )
-                    )
-                }
-                {robot && <div className="robot">{robot}</div>}
-            </div>
+        <ThemeProvider theme={theme}>
+            <Box className="App-header"><Typography variant="h1">Lesson 3</Typography></Box>
+            <Box className="main">
+                <Grid container spacing={2}>
 
-        </div>
+                    <Grid item xs={4} md={2}>
+                            <Typography variant="h5" component="div" color="primary">Chat list</Typography>
+                            <ChatList/>
+                    </Grid>
+
+                    <Grid item xs={8} md={6}>
+                        <Paper style={{padding: 10}}>
+                            <Typography variant="h5" component="div" color="primary">Messages</Typography>
+                            <Form updateCurrentPage={getInputMessage} inputRef={inputRef}/>
+                        </Paper>
+
+                            {
+                                messageList.map((message) => (
+                                    <MessageItem
+                                        message={message.message}
+                                        author={message.author}
+                                        key={message.id}/>
+                                    )
+                                )
+                            }
+                            {robot && <div className="robot">{robot}</div>}
+
+                    </Grid>
+
+                </Grid>
+            </Box>
+
+        </ThemeProvider>
 
   );
 }
