@@ -29,6 +29,11 @@
 }
 .main .input {
   display: block;
+  margin-top: 7px;
+}
+.main .messages-container {
+  max-width: 600px;
+  padding: 5px;
 }
 
 .message {

@@ -29,6 +29,12 @@
   margin: 20px auto;
   .input {
     display: block;
+    margin-top: 7px;
+  }
+  .messages-container{
+    max-width: 600px;
+    padding: 5px;
+
   }
 }
 
@@ -48,6 +54,7 @@
 .robot {
   color: green;
 }
+
 
 .App-link {
   color: #61dafb;
