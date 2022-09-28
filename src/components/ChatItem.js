@@ -5,8 +5,8 @@ import MessageItem from "../MessageItem";
 import {useParams} from "react-router-dom";
 
 const ChatItem = () => {
-    let {id} = useParams() ?? 1;
-    id = (id) ?? 1;
+    let {id} = useParams();
+    id = (id) ?? 1; //генерируем параметры компонента по умолчанию, в роутере с :id не выходит использовать index.
     let [messageList, setMessageList] = useState([]);
     let [robot, setRobot] = useState("");
     const inputRef = useRef(null);
@@ -69,7 +69,7 @@ const ChatItem = () => {
     return (
         <>
             <Paper style={{padding: 10}}>
-                <Typography variant="h5" component="div" color="primary">Messages Chat's {id}</Typography>
+                <Typography variant="h5" component="div" color="primary">Messages Chat id: {id}</Typography>
                 <Form updateCurrentPage={getInputMessage} inputRef={inputRef}/>
             </Paper>
 

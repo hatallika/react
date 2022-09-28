@@ -11,12 +11,21 @@ const ChatList = () => {
         { id: '2', name: 'Chat2'},
         { id: '3', name: 'Chat3'},
     ]);
+    const [name, setName] = useState("");
+
     const url = (id) => ('/chats/' + id);
-    const deleteChat = (e) => {
-        const { id } = e.target;
+    const deleteChat = (id) => {
         //let chat = chatList.filter(chat => chat.id !== id);
         setChatList(chat => chat.filter(chat => chat.id !== id));
         };
+
+    const addChat = () =>{
+        const objChat = {
+            id: Date.now(),
+            name: name
+        }
+        setChatList(prevState => [...prevState, objChat]);
+    };
 
     return (
         <>
@@ -29,12 +38,13 @@ const ChatList = () => {
                                     <ListItemText primary={chatItem.name}/>
                                 </ListItemButton>
                             </Link>
-                            <Button id={chatItem.id} onClick={deleteChat}>x</Button>
+                            <Button onClick={() => deleteChat(chatItem.id)}>x</Button>
 
                         </ListItem>
                     ))}
-
             </List>
+            <input value={name} onChange={(e)=>setName(e.target.value)} type="text"/>
+            <button onClick={addChat}>Добавить чат</button>
         </>
     );
 };
