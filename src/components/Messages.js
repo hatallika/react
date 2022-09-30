@@ -1,29 +1,27 @@
 import React, {useEffect, useRef, useState} from 'react';
-import {Paper, Typography} from "@mui/material";
+import {Box, Paper, Typography} from "@mui/material";
 import Form from "./Form";
 import MessageItem from "../MessageItem";
 import {useParams} from "react-router-dom";
 
-const ChatItem = () => {
+const Messages = () => {
     let {id} = useParams();
     id = (id) ?? 1; //генерируем параметры компонента по умолчанию, в роутере с :id не выходит использовать index.
-    let [messageList, setMessageList] = useState([]);
-    let [robot, setRobot] = useState("");
-    const inputRef = useRef(null);
-
-    // Ранее сохраненные сообщения.
-    const bdMessage = [
+    // Массив сообщений.
+    let [messageList, setMessageList] = useState([
         {id: 1, author:"author1",message: "Hello!", chatId: 1},
         {id: 2, author:"author2",message: "Hello! My friends!", chatId: 1},
         {id: 3, author:"author3",message: "Hi! I am here!", chatId: 2},
         {id: 4, author:"author3",message: "Hi!", chatId: 3},
-    ];
-    const lastBDAuthor = bdMessage[bdMessage.length - 1].author;
+    ]);
+    let [robot, setRobot] = useState("");
+    const inputRef = useRef(null);
+    const lastBDAuthor = messageList[messageList.length - 1].author;
 
-    useEffect(() => {
-        setMessageList(bdMessage);
-        // eslint-disable-next-line react-hooks/exhaustive-deps
-    }, [] );
+    const messages = messageList.filter((message) => {
+        if(!id) return true
+        return  message.chatId === parseInt(id)
+    });
 
     //Робот отвечает на новое полученное сообщение автора.
     useEffect(()=>{
@@ -41,17 +39,15 @@ const ChatItem = () => {
         }
     }
 
-    //Получим данные списка из формы
+    //Добавляем сообщения из формы
     const getInputMessage = (author, message) => {
 
         setMessageList(prevState => [...prevState, {
             id: getLastId(prevState),
             author: author,
-            message:message,
+            message: message,
             chatId: parseInt(id)
         }]);
-
-        console.log(messageList);
     };
 
     //Автоинкремент ID
@@ -73,21 +69,34 @@ const ChatItem = () => {
                 <Form updateCurrentPage={getInputMessage} inputRef={inputRef}/>
             </Paper>
 
-            {
-                messageList.map((message) => {
-                    return message.chatId === parseInt(id) ?
-                        <MessageItem
-                            message={message.message}
-                            author={message.author}
-                            key={message.id}
-                            chatId={message.chatId}
-                        /> : ""
-                    }
-                )
+            <Box>{
+                messages.map((message) => {
+                    return <MessageItem
+                                message={message.message}
+                                author={message.author}
+                                key={message.id}
+                                chatId={message.chatId}
+                            />
+                })
+
+                //Вариант рендера сообщений с условием по ID без функции
+                // messageList.map((message) => {
+                //     return message.chatId === parseInt(id) ?
+                //         <MessageItem
+                //             message={message.message}
+                //             author={message.author}
+                //             key={message.id}
+                //             chatId={message.chatId}
+                //         /> : ""
+                //     }
+                // )
             }
+            </Box>
+
             {robot && <div className="robot">{robot}</div>}
+
         </>
     );
 };
 
-export default ChatItem;
+export default Messages;
