@@ -1,7 +1,7 @@
 import React from 'react';
 import {Grid, Typography} from "@mui/material";
 import ChatList from "../components/ChatList";
-import ChatItem from "../components/ChatItem";
+import Messages from "../components/Messages";
 //import {useParams} from "react-router-dom";
 
 
@@ -17,7 +17,7 @@ const ChatsPage = () => {
                     </Grid>
 
                     <Grid item xs={8} md={6}>
-                        <ChatItem/>
+                        <Messages/>
                     </Grid>
 
                 </Grid>

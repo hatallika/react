@@ -7,7 +7,7 @@ import HomePage from "./pages/HomePage";
 import ChatsPage from "./pages/ChatsPage";
 import ProfilePage from "./pages/ProfilePage";
 import NotFoundPage from "./pages/NotFoundPage";
-import ChatItem from "./components/ChatItem";
+import Messages from "./components/Messages";
 
 
 
@@ -19,7 +19,7 @@ function App() {
             <Route path={'/'} element={<Layout/>}>
                 <Route index element={<HomePage/>}/>
                 <Route path={'/chats/'} element={<ChatsPage/>}>
-                    <Route path={'/chats/:id'} element={<ChatItem />}/>
+                    <Route path={'/chats/:id'} element={<Messages />}/>
                 </Route>
                 <Route path={'/profile'} element={<ProfilePage/>}/>
                 <Route path={'*'} element={<NotFoundPage/>}/>

@@ -1,36 +1,45 @@
-import React from 'react';
-import CustomLink from "./CustomLink";
+import React, {useState} from 'react';
 import {Outlet} from "react-router-dom";
-import {Box, createTheme, ThemeProvider, Typography} from "@mui/material";
-import {blue} from "@mui/material/colors";
-
-const theme = createTheme({
-    palette: {
-        primary: {
-            main: blue[500],
-        }
-    }
-})
+import {Box, createTheme, ThemeProvider} from "@mui/material";
+import {ThemeContext, themes} from "../context";
+import Header from "./Header";
 
 
 const Layout = () => {
+    const [theme,setTheme] = useState(themes.light);
+    const [mode, setMode] = useState('light');
+
+    const toggleTheme = () => {
+        //Задание 3. Меняем тему из context (Заголовок)
+        setTheme(prevState => prevState === themes.light ? themes.dark : themes.light );
+        //поменяла остальные элементы темы через MUI
+        setMode((prevMode) => (prevMode === 'light' ? 'dark' : 'light'));
+    };
+
+    const themeMui = React.useMemo(
+        () =>
+            createTheme({
+                palette: {
+                    mode,
+                },
+            }),
+        [mode],
+    );
+
     return (
-        <ThemeProvider theme={theme}>
-            <header>
-                <Box className="App-header"><Typography variant="h1">Lesson 4</Typography></Box>
-                <CustomLink to={"/"}>Home</CustomLink>
-                <CustomLink to={"/chats"}>Chats</CustomLink>
-                <CustomLink to={"/profile"}>Profile</CustomLink>
-            </header>
-            <Box className="main">
-            <main>
-                <Outlet/>
-            </main>
-            <footer>
-                @2022
-            </footer>
-            </Box>
-        </ThemeProvider>
+        <ThemeContext.Provider value={{themes: theme, toggleTheme: toggleTheme} } >
+            <ThemeProvider theme={themeMui}>
+                <Header/>
+                <Box  style={{background: theme.body.background}}>
+
+                    <Outlet/>
+
+                    <footer>
+                        @2022
+                    </footer>
+                </Box>
+            </ThemeProvider>
+        </ThemeContext.Provider>
     );
 };
 
