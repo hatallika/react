@@ -3,21 +3,29 @@ import {Box, Paper, Typography} from "@mui/material";
 import Form from "./Form";
 import MessageItem from "../MessageItem";
 import {useParams} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
 
 const Messages = () => {
+
     let {id} = useParams();
     id = (id) ?? 1; //генерируем параметры компонента по умолчанию, в роутере с :id не выходит использовать index.
     // Массив сообщений.
-    let [messageList, setMessageList] = useState([
-        {id: 1, author:"author1",message: "Hello!", chatId: 1},
-        {id: 2, author:"author2",message: "Hello! My friends!", chatId: 1},
-        {id: 3, author:"author3",message: "Hi! I am here!", chatId: 2},
-        {id: 4, author:"author3",message: "Hi!", chatId: 3},
-    ]);
+    let messageList = useSelector(state => state.messages.messages);
+    let chatList = useSelector(state => state.chats.chats);
+
+    const dispatch = useDispatch();
+
+    const chatName = () => {
+        let currentChat = chatList.find(chat => chat.id === parseInt(id));
+        if (currentChat) {
+            return  currentChat.name;
+        } else return 'undefined';
+    }
+
     let [robot, setRobot] = useState("");
     const inputRef = useRef(null);
-    const lastBDAuthor = messageList[messageList.length - 1].author;
 
+    //фильтруем сообщения по id
     const messages = messageList.filter((message) => {
         if(!id) return true
         return  message.chatId === parseInt(id)
@@ -40,14 +48,16 @@ const Messages = () => {
     }
 
     //Добавляем сообщения из формы
-    const getInputMessage = (author, message) => {
-
-        setMessageList(prevState => [...prevState, {
-            id: getLastId(prevState),
-            author: author,
-            message: message,
-            chatId: parseInt(id)
-        }]);
+    const sendInputMessage = (author, message) => {
+        dispatch({
+            type: 'addmessage',
+            payload: {
+                id: getLastId(messageList),
+                author: author,
+                message: message,
+                chatId: parseInt(id),
+            }
+        });
     };
 
     //Автоинкремент ID
@@ -57,16 +67,13 @@ const Messages = () => {
 
     function botAnswer(){
         const lastAuthor = messageList[messageList.length -1];
-
-        if(lastAuthor && lastAuthor.author !== lastBDAuthor){
-            setRobot('Сообщение автора '+ lastAuthor.author +' добавлено в чат' + id)
-        }
+        setRobot('Сообщение автора '+ lastAuthor.author +' добавлено в чат' + id);
     }
     return (
         <>
             <Paper style={{padding: 10}}>
-                <Typography variant="h5" component="div" color="primary">Messages Chat id: {id}</Typography>
-                <Form updateCurrentPage={getInputMessage} inputRef={inputRef}/>
+                <Typography variant="h5" component="div" color="primary">Messages Chat: {chatName()}</Typography>
+                <Form updateCurrentPage={sendInputMessage} inputRef={inputRef}/>
             </Paper>
 
             <Box>{
@@ -76,20 +83,9 @@ const Messages = () => {
                                 author={message.author}
                                 key={message.id}
                                 chatId={message.chatId}
+                                id={message.id}
                             />
                 })
-
-                //Вариант рендера сообщений с условием по ID без функции
-                // messageList.map((message) => {
-                //     return message.chatId === parseInt(id) ?
-                //         <MessageItem
-                //             message={message.message}
-                //             author={message.author}
-                //             key={message.id}
-                //             chatId={message.chatId}
-                //         /> : ""
-                //     }
-                // )
             }
             </Box>
 
