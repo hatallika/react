@@ -3,10 +3,11 @@ import {Avatar, Button, List, ListItem, ListItemAvatar, ListItemButton, ListItem
 import ChatIcon from "@mui/icons-material/Chat";
 import CustomLink from "./CustomLink";
 import {useDispatch, useSelector} from "react-redux";
+import {chatsSelector} from "../redux/reducers/chatsReduser/chatsSelector";
 
 const ChatList = () => {
     //Массив чатов
-    const chatList = useSelector(state => state.chats.chats);
+    const chatList = useSelector(chatsSelector);
     const dispatch = useDispatch();
 
     const [name, setName] = useState("");

@@ -7,7 +7,6 @@ const MassageItem = ({id, author, message}) => {
     const dispatch = useDispatch();
 
     const deleteMessage = (id) => {
-        console.log('delete' + id)
         dispatch({type:'delmessage', payload: id})
     };
 
@@ -21,7 +20,7 @@ const MassageItem = ({id, author, message}) => {
                 <Typography variant="h5" component="div">
                    {message}
                 </Typography>
-                <Button onClick={() => deleteMessage(id)}>x</Button>
+                <Button onClick={() => deleteMessage(id)}>Delete</Button>
             </CardContent>
         </Card>
 

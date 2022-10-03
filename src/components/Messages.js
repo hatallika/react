@@ -1,17 +1,19 @@
 import React, {useEffect, useRef, useState} from 'react';
 import {Box, Paper, Typography} from "@mui/material";
 import Form from "./Form";
-import MessageItem from "../MessageItem";
+import MessageItem from "./MessageItem";
 import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
+import {messagesSelector} from "../redux/reducers/messagesReducer/messagesSelector";
+import {chatsSelector} from "../redux/reducers/chatsReduser/chatsSelector";
 
 const Messages = () => {
 
     let {id} = useParams();
     id = (id) ?? 1; //генерируем параметры компонента по умолчанию, в роутере с :id не выходит использовать index.
     // Массив сообщений.
-    let messageList = useSelector(state => state.messages.messages);
-    let chatList = useSelector(state => state.chats.chats);
+    let messageList = useSelector(messagesSelector);
+    let chatList = useSelector(chatsSelector);
 
     const dispatch = useDispatch();
 
