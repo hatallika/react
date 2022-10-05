@@ -2,12 +2,20 @@ import {applyMiddleware, combineReducers, createStore} from "redux";
 import {chatsReducer} from "./reducers/chatsReduser/chatsReducer";
 import {messagesReducer} from "./reducers/messagesReducer/messagesReducer";
 import {robotReducer} from "./reducers/robotReducer/robotReducer";
-
+import storage from 'redux-persist/lib/storage'
+import {persistReducer, persistStore} from "redux-persist";
 
 export const addRobotAnswer = (answer) => ({
     type: 'robotanswer',
     payload: answer
 });
+
+const config = {
+    key: 'root',
+    storage
+}
+
+
 
 const robotAnswer = store => next => action => {
 
@@ -32,4 +40,8 @@ export const reducer = combineReducers({
 
 })
 
-export const store = createStore(reducer, applyMiddleware(robotAnswer));
+const persistedReducer = persistReducer(config, reducer);
+
+//export const store = createStore(reducer, applyMiddleware(robotAnswer));
+export const store = createStore(persistedReducer, applyMiddleware(robotAnswer));
+export const persistor = persistStore(store);

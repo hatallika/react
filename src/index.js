@@ -5,18 +5,21 @@ import App from './App';
 import reportWebVitals from './reportWebVitals';
 import {BrowserRouter} from "react-router-dom";
 import {Provider} from "react-redux";
-import {store} from "./redux/configureStore";
+import {persistor, store} from "./redux/configureStore";
+import {PersistGate} from "redux-persist/integration/react";
 
 const root = ReactDOM.createRoot(document.getElementById('root'));
 const myName = 'Natalya';
 let isRed = false;
 let top = '15px';
 root.render(
-    <Provider store={store}>
-      <BrowserRouter>
-        <App name={myName} showRed = {isRed} topPosition = {top}/>
-      </BrowserRouter>
-    </Provider>
+    <PersistGate persistor={persistor}>
+        <Provider store={store}>
+          <BrowserRouter>
+            <App name={myName} showRed = {isRed} topPosition = {top}/>
+          </BrowserRouter>
+        </Provider>
+    </PersistGate>
 );
 
 // If you want to start measuring performance in your app, pass a function
