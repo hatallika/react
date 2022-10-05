@@ -1,54 +1,19 @@
-import React, {useState} from 'react';
-import {Avatar, Button, List, ListItem, ListItemAvatar, ListItemButton, ListItemText} from "@mui/material";
-import ChatIcon from "@mui/icons-material/Chat";
+import React from 'react';
 import CustomLink from "./CustomLink";
+import {Avatar, Button, ListItem, ListItemAvatar, ListItemButton, ListItemText} from "@mui/material";
+import ChatIcon from "@mui/icons-material/Chat";
 
-
-const ChatList = () => {
-
-
-
-    //Массив чатов
-    const [chatList,setChatList] = useState([
-        { id: '1', name: 'Chat1'},
-        { id: '2', name: 'Chat2'},
-        { id: '3', name: 'Chat3'},
-    ]);
-    const [name, setName] = useState("");
-
-    const url = (id) => ('/chats/' + id);
-    const deleteChat = (id) => {
-        //let chat = chatList.filter(chat => chat.id !== id);
-        setChatList(chat => chat.filter(chat => chat.id !== id));
-        };
-
-    const addChat = () =>{
-        const objChat = {
-            id: Date.now(),
-            name: name
-        }
-        setChatList(prevState => [...prevState, objChat]);
-    };
-
+const ChatList = ({chatItem, deleteChat}) => {
     return (
-        <>
-            <List sx={{margin: '10px 0 10px 0', width: '100%'}}>
-                    {chatList.map((chatItem)=>(
-                        <ListItem disablePadding key={chatItem.id}>
-                            <CustomLink to={url(chatItem.id)}>
-                                <ListItemButton>
-                                    <ListItemAvatar><Avatar><ChatIcon/></Avatar></ListItemAvatar>
-                                    <ListItemText primary={chatItem.name}/>
-                                </ListItemButton>
-                            </CustomLink>
-                            <Button onClick={() => deleteChat(chatItem.id)}>x</Button>
-
-                        </ListItem>
-                    ))}
-            </List>
-            <input value={name} onChange={(e)=>setName(e.target.value)} type="text"/>
-            <button onClick={addChat}>Добавить чат</button>
-        </>
+        <ListItem disablePadding key={chatItem.id}>
+            <CustomLink to={`/chats/${chatItem.id}`}>
+                <ListItemButton>
+                    <ListItemAvatar><Avatar><ChatIcon/></Avatar></ListItemAvatar>
+                    <ListItemText primary={chatItem.name}/>
+                </ListItemButton>
+            </CustomLink>
+            <Button onClick={() => deleteChat(chatItem.id)}>x</Button>
+        </ListItem>
     );
 };
 
