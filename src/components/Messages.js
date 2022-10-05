@@ -10,6 +10,12 @@ import {robotAnswerSelector} from "../redux/reducers/robotReducer/robotSelector"
 
 const Messages = () => {
 
+    const dispatch = useDispatch();
+
+    const deleteMessage = (id) => {
+        dispatch({type:'delmessage', payload: id})
+    };
+
     const robotAnswer = useSelector(robotAnswerSelector);
     let {id} = useParams();
     id = (id) ?? 1; //генерируем параметры компонента по умолчанию, в роутере с :id не выходит использовать index.
@@ -17,7 +23,7 @@ const Messages = () => {
     let messageList = useSelector(messagesSelector);
     let chatList = useSelector(chatsSelector);
 
-    const dispatch = useDispatch();
+    //const dispatch = useDispatch();
 
     const chatName = () => {
         let currentChat = chatList.find(chat => chat.id === parseInt(id));
@@ -80,6 +86,7 @@ const Messages = () => {
                                 key={message.id}
                                 chatId={message.chatId}
                                 id={message.id}
+                                deleteMessage={deleteMessage}
                             />
                 })
             }

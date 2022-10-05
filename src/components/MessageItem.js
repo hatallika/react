@@ -2,16 +2,12 @@ import React from 'react';
 import {Button, Card, CardContent, Typography} from "@mui/material";
 import {useDispatch} from "react-redux";
 
-const MassageItem = ({id, author, message}) => {
+const MessageItem = ({id, author, message, deleteMessage}) => {
 
-    const dispatch = useDispatch();
 
-    const deleteMessage = (id) => {
-        dispatch({type:'delmessage', payload: id})
-    };
 
     return (
-        <>
+
         <Card sx={{ minWidth: 275, mt: 1 }}>
             <CardContent >
                 <Typography sx={{ fontSize: 14 }} color="text.secondary" gutterBottom>
@@ -24,8 +20,8 @@ const MassageItem = ({id, author, message}) => {
             </CardContent>
         </Card>
 
-        </>
+
     );
 };
 
-export default MassageItem;
+export default MessageItem;

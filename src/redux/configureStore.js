@@ -15,8 +15,6 @@ const config = {
     storage
 }
 
-
-
 const robotAnswer = store => next => action => {
 
     //let result = next(action);
@@ -24,9 +22,9 @@ const robotAnswer = store => next => action => {
 
         setTimeout(()=>{
             let currentMessages = store.getState().messages.messages;
-
             let answer = "Сообщение автора " + currentMessages[currentMessages.length-1].author + " отправлено";
             console.log(answer);
+
             return store.dispatch(addRobotAnswer(answer));
         }, 3000);
     }
