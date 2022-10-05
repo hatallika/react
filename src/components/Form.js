@@ -12,6 +12,7 @@ function Form(props) {
 
     //отправка сообщения
     const sendValue = (e)=>{
+        e.preventDefault();
         if(formValues.author !== '' && formValues.message !== ''){
             e.preventDefault();
             props.updateCurrentPage(formValues.author, formValues.message);

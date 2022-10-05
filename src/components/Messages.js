@@ -1,4 +1,4 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {Box, Paper, Typography} from "@mui/material";
 import Form from "./Form";
 import MessageItem from "./MessageItem";
@@ -6,9 +6,11 @@ import {useParams} from "react-router-dom";
 import {useDispatch, useSelector} from "react-redux";
 import {messagesSelector} from "../redux/reducers/messagesReducer/messagesSelector";
 import {chatsSelector} from "../redux/reducers/chatsReduser/chatsSelector";
+import {robotAnswerSelector} from "../redux/reducers/robotReducer/robotSelector";
 
 const Messages = () => {
 
+    const robotAnswer = useSelector(robotAnswerSelector);
     let {id} = useParams();
     id = (id) ?? 1; //генерируем параметры компонента по умолчанию, в роутере с :id не выходит использовать index.
     // Массив сообщений.
@@ -24,7 +26,6 @@ const Messages = () => {
         } else return 'undefined';
     }
 
-    let [robot, setRobot] = useState("");
     const inputRef = useRef(null);
 
     //фильтруем сообщения по id
@@ -35,9 +36,6 @@ const Messages = () => {
 
     //Робот отвечает на новое полученное сообщение автора.
     useEffect(()=>{
-        setTimeout(()=>{
-            botAnswer();
-        }, 3000);
         //Автофокус
         focusTextField(inputRef.current);
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -67,10 +65,6 @@ const Messages = () => {
         return array.length ? array[array.length -1].id + 1 : 0
     }
 
-    function botAnswer(){
-        const lastAuthor = messageList[messageList.length -1];
-        setRobot('Сообщение автора '+ lastAuthor.author +' добавлено в чат' + id);
-    }
     return (
         <>
             <Paper style={{padding: 10}}>
@@ -91,7 +85,7 @@ const Messages = () => {
             }
             </Box>
 
-            {robot && <div className="robot">{robot}</div>}
+            {robotAnswer && <div className="robot">{robotAnswer}</div>}
 
         </>
     );
