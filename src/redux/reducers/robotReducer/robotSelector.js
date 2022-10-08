@@ -1,0 +1,1 @@
+export const robotAnswerSelector = state => state.robot.robot.answer;
