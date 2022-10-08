@@ -1,3 +1,5 @@
+import {ADD_MESSAGE, DELETE_MESSAGE} from "../../actionTypes";
+
 const initialState = {
     messages: [
         {id: 1, author:"author1",message: "Hello!", chatId: 1},
@@ -9,7 +11,7 @@ const initialState = {
 
 export const messagesReducer = (state = initialState, action) => {
     switch (action.type) {
-        case('addmessage'): return {
+        case(ADD_MESSAGE): return {
             ...state,
             messages: [...state.messages, {
                 id: action.payload.id,
@@ -18,7 +20,7 @@ export const messagesReducer = (state = initialState, action) => {
                 chatId: action.payload.chatId
             }]
         }
-        case ('delmessage'): return {
+        case (DELETE_MESSAGE): return {
             ...state,
             messages: state.messages.filter((message)=> message.id !== action.payload)
         }

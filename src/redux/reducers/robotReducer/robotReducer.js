@@ -1,3 +1,5 @@
+import {ROBOT_ANSWER} from "../../actionTypes";
+
 const initialState = {
     robot: {
         answer: ""
@@ -7,7 +9,7 @@ const initialState = {
 export const robotReducer = (state = initialState, action) => {
     switch (action.type){
 
-        case 'robotanswer': return {
+        case ROBOT_ANSWER: return {
             ...state, robot: {
                 answer: action.payload
             }

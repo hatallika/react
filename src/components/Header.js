@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {Box, FormControlLabel, Switch, Typography} from "@mui/material";
+import {Box, Button, FormControlLabel, Switch, Typography} from "@mui/material";
 import CustomLink from "./CustomLink";
 import {ThemeContext} from "../context";
 
@@ -10,9 +10,10 @@ const Header = () => {
             <FormControlLabel control={<Switch onClick={toggleTheme} />} label="Dark Theme" />
             <Box className="App-header" style={{background: themes.header.background, color: themes.header.color}}><Typography variant="h1">Lesson 4</Typography></Box>
             <Box style={{background: themes.body.background}}>
-                <CustomLink to={"/"}>Home</CustomLink>
-                <CustomLink to={"/chats"}>Chats</CustomLink>
-                <CustomLink to={"/profile"}>Profile</CustomLink>
+                <CustomLink to={"/"}><Button >Home</Button></CustomLink>
+                <CustomLink to={"/chats"}><Button>Chats</Button></CustomLink>
+                <CustomLink to={"/profile"}><Button>Profile</Button></CustomLink>
+                <CustomLink to={"/posts"}><Button>Posts</Button></CustomLink>
             </Box>
         </header>
     );

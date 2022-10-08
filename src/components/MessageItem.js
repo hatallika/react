@@ -1,10 +1,7 @@
 import React from 'react';
 import {Button, Card, CardContent, Typography} from "@mui/material";
-import {useDispatch} from "react-redux";
 
 const MessageItem = ({id, author, message, deleteMessage}) => {
-
-
 
     return (
 

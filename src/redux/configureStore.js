@@ -4,9 +4,12 @@ import {messagesReducer} from "./reducers/messagesReducer/messagesReducer";
 import {robotReducer} from "./reducers/robotReducer/robotReducer";
 import storage from 'redux-persist/lib/storage'
 import {persistReducer, persistStore} from "redux-persist";
+import {postsReducer} from "./reducers/postsReducer/postsReducer";
+import thunk from "redux-thunk";
+import {ROBOT_ANSWER} from "./actionTypes";
 
 export const addRobotAnswer = (answer) => ({
-    type: 'robotanswer',
+    type: ROBOT_ANSWER,
     payload: answer
 });
 
@@ -16,7 +19,6 @@ const config = {
 }
 
 const robotAnswer = store => next => action => {
-
     //let result = next(action);
     if (action.type === 'addmessage' /* && prevStoreMessages[prevStoreMessages.length-1].author !== store.getState().messages.author*/) {
 
@@ -34,12 +36,12 @@ const robotAnswer = store => next => action => {
 export const reducer = combineReducers({
     chats: chatsReducer,
     messages: messagesReducer,
-    robot: robotReducer
-
+    robot: robotReducer,
+    posts: postsReducer
 })
 
 const persistedReducer = persistReducer(config, reducer);
 
 //export const store = createStore(reducer, applyMiddleware(robotAnswer));
-export const store = createStore(persistedReducer, applyMiddleware(robotAnswer));
+export const store = createStore(persistedReducer, applyMiddleware(robotAnswer, thunk));
 export const persistor = persistStore(store);

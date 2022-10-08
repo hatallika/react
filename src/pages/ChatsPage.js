@@ -2,7 +2,6 @@ import React from 'react';
 import {Grid, Typography} from "@mui/material";
 import ChatListContainer from "../components/ChatListContainer";
 import Messages from "../components/Messages";
-//import {useParams} from "react-router-dom";
 
 
 const ChatsPage = () => {

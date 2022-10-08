@@ -7,13 +7,14 @@ import {useDispatch, useSelector} from "react-redux";
 import {messagesSelector} from "../redux/reducers/messagesReducer/messagesSelector";
 import {chatsSelector} from "../redux/reducers/chatsReduser/chatsSelector";
 import {robotAnswerSelector} from "../redux/reducers/robotReducer/robotSelector";
+import {ADD_MESSAGE, DELETE_MESSAGE} from "../redux/actionTypes";
 
 const Messages = () => {
 
     const dispatch = useDispatch();
 
     const deleteMessage = (id) => {
-        dispatch({type:'delmessage', payload: id})
+        dispatch({type: DELETE_MESSAGE, payload: id})
     };
 
     const robotAnswer = useSelector(robotAnswerSelector);
@@ -56,7 +57,7 @@ const Messages = () => {
     //Добавляем сообщения из формы
     const sendInputMessage = (author, message) => {
         dispatch({
-            type: 'addmessage',
+            type: ADD_MESSAGE,
             payload: {
                 id: getLastId(messageList),
                 author: author,
