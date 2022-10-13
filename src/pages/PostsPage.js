@@ -15,12 +15,16 @@ const PostsPage = () => {
         dispatch(getPosts());
     },[dispatch]);
 
+    const fetchPosts = () => {
+        dispatch(getPosts());
+    }
+
     if(error){
         return <div>
 
                 <h3>Error</h3>
                 <span>Ошибка: {error}</span>
-                <button onClick={()=>dispatch(getPosts())}>Retry</button>
+                <button onClick={fetchPosts}>Retry</button>
 
         </div>
     }

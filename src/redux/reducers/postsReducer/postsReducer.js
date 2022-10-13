@@ -8,7 +8,6 @@ const initialState = {
 
 export const getPosts = () => {
     return async (dispatch) => {
-
         dispatch({type: GET_POSTS_LOADING});
         try{
             const response = await fetch('https://jsonplaceholder.typicode.com/posts');

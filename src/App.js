@@ -9,6 +9,8 @@ import ProfilePage from "./pages/ProfilePage";
 import NotFoundPage from "./pages/NotFoundPage";
 import Messages from "./components/Messages";
 import PostsPage from "./pages/PostsPage";
+import LoginPage from "./pages/Auth/LoginPage";
+import RegisterPage from "./pages/Auth/RegisterPage";
 
 
 
@@ -24,6 +26,8 @@ function App() {
                 </Route>
                 <Route path={'/profile'} element={<ProfilePage/>}/>
                 <Route path={'/posts'} element={<PostsPage/>}/>
+                <Route path={'/login'} element={<LoginPage/>}/>
+                <Route path={'/registration'} element={<RegisterPage/>}/>
                 <Route path={'*'} element={<NotFoundPage/>}/>
             </Route>
 
