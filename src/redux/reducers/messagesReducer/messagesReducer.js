@@ -9,6 +9,8 @@ const initialState = {
     ]
 };
 
+
+
 export const messagesReducer = (state = initialState, action) => {
     switch (action.type) {
         case(ADD_MESSAGE): return {
@@ -17,7 +19,7 @@ export const messagesReducer = (state = initialState, action) => {
                 id: action.payload.id,
                 author: action.payload.author,
                 message: action.payload.message,
-                chatId: action.payload.chatId
+                chatId: action.payload.chatId,
             }]
         }
         case (DELETE_MESSAGE): return {

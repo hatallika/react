@@ -1,0 +1,69 @@
+// Jest Snapshot v1, https://goo.gl/fbAQLP
+
+exports[`messageReducer 1`] = `
+Object {
+  "messages": Array [
+    Object {
+      "author": "author1",
+      "chatId": 1,
+      "id": 1,
+      "message": "Hello!",
+    },
+    Object {
+      "author": "author2",
+      "chatId": 1,
+      "id": 2,
+      "message": "Hello! My friends!",
+    },
+    Object {
+      "author": "author3",
+      "chatId": 2,
+      "id": 3,
+      "message": "Hi! I am here!",
+    },
+    Object {
+      "author": "author3",
+      "chatId": 3,
+      "id": 4,
+      "message": "Hi!",
+    },
+  ],
+}
+`;
+
+exports[`messageReducer snapshot 1`] = `
+Object {
+  "messages": Array [
+    Object {
+      "author": "author1",
+      "chatId": 1,
+      "id": 1,
+      "message": "Hello!",
+    },
+    Object {
+      "author": "author2",
+      "chatId": 1,
+      "id": 2,
+      "message": "Hello! My friends!",
+    },
+    Object {
+      "author": "author3",
+      "chatId": 2,
+      "id": 3,
+      "message": "Hi! I am here!",
+    },
+    Object {
+      "author": "author3",
+      "chatId": 3,
+      "id": 4,
+      "message": "Hi!",
+    },
+    Object {
+      "author": "author",
+      "chatId": 1,
+      "id": 1,
+      "message": "message",
+    },
+  ],
+}
+`;
