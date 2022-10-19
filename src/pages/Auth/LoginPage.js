@@ -21,7 +21,7 @@ const LoginPage = () => {
          dispatch(loginInitiate(email,password));
         setTimeout(()=>{
             navigate('/profile');
-        },500)
+        },1000)
 
     }
 

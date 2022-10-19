@@ -1,5 +1,4 @@
 import React, {useState} from 'react';
-import {List} from "@mui/material";
 
 import {useDispatch, useSelector} from "react-redux";
 import {chatsSelector} from "../redux/reducers/chatsReduser/chatsSelector";
@@ -29,11 +28,11 @@ const ChatListContainer = () => {
 
     return (
         <>
-            <List sx={{margin: '10px 0 10px 0', width: '100%'}}>
+            <div className={"chat-list"}>
                     {chatList.map((chatItem)=>(
                         <ChatList chatItem={chatItem} deleteChat={deleteChat} key={chatItem.id}/>
                     ))}
-            </List>
+            </div>
             <input value={name} onChange={(e)=>setName(e.target.value)} type="text"/>
             <button onClick={addChat}>Добавить чат</button>
         </>

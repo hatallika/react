@@ -1,4 +1,4 @@
-import React, {useEffect} from 'react';
+import React from 'react';
 import {useDispatch, useSelector} from "react-redux";
 import {logoutInitiate} from "../redux/reducers/authReducer/authReducer";
 import {useNavigate} from "react-router-dom";
@@ -10,17 +10,16 @@ const ProfilePage = () => {
     const navigate = useNavigate();
 
     const handleAuth = () => {
-
             dispatch(logoutInitiate());
             setTimeout(()=> {
                 navigate('/login');
             }, 1000);
     }
-    useEffect(()=>{
-        if(!user){
-            navigate('/login');
-        }
-    },[navigate, user])
+    // useEffect(()=>{
+    //     if(!user){
+    //         navigate('/login');
+    //     }
+    // },[navigate, user])
 
     return (
         <div>

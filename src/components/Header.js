@@ -1,5 +1,5 @@
 import React, {useContext} from 'react';
-import {Box, Button, FormControlLabel, Switch, Typography} from "@mui/material";
+import {Box, Button, FormControlLabel, List, Switch, Typography} from "@mui/material";
 import CustomLink from "./CustomLink";
 import {ThemeContext} from "../context";
 import {useDispatch, useSelector} from "react-redux";
@@ -22,14 +22,15 @@ const Header = () => {
     return (
         <header>
             <FormControlLabel control={<Switch onClick={toggleTheme} />} label="Dark Theme" />
-            <Box className="App-header" style={{background: themes.header.background, color: themes.header.color}}><Typography variant="h1">Lesson 4</Typography></Box>
+            <Box className="App-header" style={{background: themes.header.background, color: themes.header.color}}><Typography variant="h1">Lesson 10</Typography></Box>
             <Box paddingX={5} display={"flex"} style={{background: themes.body.background}} justifyContent={"space-between"}>
-                <Box >
-                <CustomLink to={"/"}><Button >Home</Button></CustomLink>
-                <CustomLink to={"/chats"}><Button>Chats</Button></CustomLink>
-                <CustomLink to={"/profile"}><Button>Profile</Button></CustomLink>
-                <CustomLink to={"/posts"}><Button>Posts</Button></CustomLink>
-                </Box>
+                <List className={"menu-list"}>
+                <CustomLink to={"/"}>Home</CustomLink>
+                <CustomLink to={"/chats"}>Chats</CustomLink>
+                <CustomLink to={"/profile"}>Profile</CustomLink>
+                <CustomLink to={"/addcontact"}>Add Contact</CustomLink>
+                <CustomLink to={"/posts"}>Posts</CustomLink>
+                </List>
                 <Box>
                     {(!user) && <CustomLink to={"/login"}><Button>Login</Button></CustomLink>}
                     {(user) && <>
