@@ -45,7 +45,22 @@
 }
 
 .header-blue {
-  background-color: #6095f0;
+  background-color: #88b4ff;
+}
+
+.menu-list {
+  display: flex;
+}
+.menu-list a {
+  text-decoration: none;
+}
+.menu-list p {
+  margin: 3px 5px;
+  padding: 5px;
+}
+
+.menu-list .active p {
+  background-color: #3cb5ec;
 }
 
 .robot {

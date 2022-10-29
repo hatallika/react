@@ -49,8 +49,27 @@
   background-color: darkred;
 }
 .header-blue{
-  background-color: #6095f0;
+  background-color: #88b4ff;
 }
+
+.menu-list {
+  display: flex;
+  a {
+    text-decoration: none;
+  }
+  p{
+    margin: 3px 5px;
+    padding: 5px;
+
+  }
+}
+
+.menu-list .active p{
+  background-color: rgb(60, 181, 236);
+
+}
+
+
 .robot {
   color: green;
 }

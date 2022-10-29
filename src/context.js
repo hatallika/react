@@ -10,6 +10,10 @@ export const themes ={
             background: "#eee",
             text: '#000'
         },
+
+        menu: {
+            active: "#3cb5ec",
+        },
         mode:'light'
     },
 
@@ -21,6 +25,9 @@ export const themes ={
         body: {
             background: "#000",
             text: '#eee'
+        },
+        menu: {
+            active: "#a9a0a0",
         },
         mode: 'dark'
     }

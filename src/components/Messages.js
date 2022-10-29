@@ -1,23 +1,41 @@
-import React, {useEffect, useRef, useState} from 'react';
+import React, {useEffect, useRef} from 'react';
 import {Box, Paper, Typography} from "@mui/material";
 import Form from "./Form";
-import MessageItem from "../MessageItem";
+import MessageItem from "./MessageItem";
 import {useParams} from "react-router-dom";
+import {useDispatch, useSelector} from "react-redux";
+import {messagesSelector} from "../redux/reducers/messagesReducer/messagesSelector";
+import {chatsSelector} from "../redux/reducers/chatsReduser/chatsSelector";
+import {robotAnswerSelector} from "../redux/reducers/robotReducer/robotSelector";
+import {ADD_MESSAGE, DELETE_MESSAGE} from "../redux/actionTypes";
 
 const Messages = () => {
+
+    const dispatch = useDispatch();
+
+    const deleteMessage = (id) => {
+        dispatch({type: DELETE_MESSAGE, payload: id})
+    };
+
+    const robotAnswer = useSelector(robotAnswerSelector);
     let {id} = useParams();
     id = (id) ?? 1; //генерируем параметры компонента по умолчанию, в роутере с :id не выходит использовать index.
     // Массив сообщений.
-    let [messageList, setMessageList] = useState([
-        {id: 1, author:"author1",message: "Hello!", chatId: 1},
-        {id: 2, author:"author2",message: "Hello! My friends!", chatId: 1},
-        {id: 3, author:"author3",message: "Hi! I am here!", chatId: 2},
-        {id: 4, author:"author3",message: "Hi!", chatId: 3},
-    ]);
-    let [robot, setRobot] = useState("");
-    const inputRef = useRef(null);
-    const lastBDAuthor = messageList[messageList.length - 1].author;
+    let messageList = useSelector(messagesSelector);
+    let chatList = useSelector(chatsSelector);
 
+    //const dispatch = useDispatch();
+
+    const chatName = () => {
+        let currentChat = chatList.find(chat => chat.id === parseInt(id));
+        if (currentChat) {
+            return  currentChat.name;
+        } else return 'undefined';
+    }
+
+    const inputRef = useRef(null);
+
+    //фильтруем сообщения по id
     const messages = messageList.filter((message) => {
         if(!id) return true
         return  message.chatId === parseInt(id)
@@ -25,9 +43,6 @@ const Messages = () => {
 
     //Робот отвечает на новое полученное сообщение автора.
     useEffect(()=>{
-        setTimeout(()=>{
-            botAnswer();
-        }, 3000);
         //Автофокус
         focusTextField(inputRef.current);
         // eslint-disable-next-line react-hooks/exhaustive-deps
@@ -40,14 +55,16 @@ const Messages = () => {
     }
 
     //Добавляем сообщения из формы
-    const getInputMessage = (author, message) => {
-
-        setMessageList(prevState => [...prevState, {
-            id: getLastId(prevState),
-            author: author,
-            message: message,
-            chatId: parseInt(id)
-        }]);
+    const sendInputMessage = (author, message) => {
+        dispatch({
+            type: ADD_MESSAGE,
+            payload: {
+                id: getLastId(messageList),
+                author: author,
+                message: message,
+                chatId: parseInt(id),
+            }
+        });
     };
 
     //Автоинкремент ID
@@ -55,18 +72,11 @@ const Messages = () => {
         return array.length ? array[array.length -1].id + 1 : 0
     }
 
-    function botAnswer(){
-        const lastAuthor = messageList[messageList.length -1];
-
-        if(lastAuthor && lastAuthor.author !== lastBDAuthor){
-            setRobot('Сообщение автора '+ lastAuthor.author +' добавлено в чат' + id)
-        }
-    }
     return (
         <>
             <Paper style={{padding: 10}}>
-                <Typography variant="h5" component="div" color="primary">Messages Chat id: {id}</Typography>
-                <Form updateCurrentPage={getInputMessage} inputRef={inputRef}/>
+                <Typography variant="h5" component="div" color="primary">Messages Chat: {chatName()}</Typography>
+                <Form updateCurrentPage={sendInputMessage} inputRef={inputRef}/>
             </Paper>
 
             <Box>{
@@ -76,24 +86,14 @@ const Messages = () => {
                                 author={message.author}
                                 key={message.id}
                                 chatId={message.chatId}
+                                id={message.id}
+                                deleteMessage={deleteMessage}
                             />
                 })
-
-                //Вариант рендера сообщений с условием по ID без функции
-                // messageList.map((message) => {
-                //     return message.chatId === parseInt(id) ?
-                //         <MessageItem
-                //             message={message.message}
-                //             author={message.author}
-                //             key={message.id}
-                //             chatId={message.chatId}
-                //         /> : ""
-                //     }
-                // )
             }
             </Box>
 
-            {robot && <div className="robot">{robot}</div>}
+            {robotAnswer && <div className="robot">{robotAnswer}</div>}
 
         </>
     );
